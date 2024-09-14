@@ -1,3 +1,5 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": ["next/core-web-vitals"]
+  //  This below is the default one that comes in the NextJS project. However, Mckay has removed the next/typescript to not affect some of the types.
+  // "extends": ["next/core-web-vitals", "next/typescript"]
 }

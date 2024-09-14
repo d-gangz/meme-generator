@@ -1,0 +1,262 @@
+## Guidelines
+
+Some guidelines when working with a tech stack that includes Next.js (App Router), Typescript, Tailwind CSS and shadcn/ui:
+
+- When generating components, if there is an existing `components` folder, create them inside there, else create a new `components` folder inside the `src` folder and store the components inside.
+- Use `type` instead of `interface` for type definitions
+- Avoid using `React.FC` for components. Instead, define a type for the component and use that type. Note that there should be no empty line between the type definition and the component definition.
+- Always use shadcn/ui components as priority.
+
+Example:
+
+```tsx
+type MessageListProps = {
+    messages: UIState;
+    isLoading: boolean;
+  };
+  const MessageList = ({ messages, isLoading }: MessageListProps) => {
+// code omitted for brevity...
+  }
+
+  export default MessageList;
+```
+
+- Never use `any` type
+
+## 1. NextJS Best Practices
+
+- always use server components over client components as much as possible.
+- For client components, remember to add a `use client` on top of the code.
+
+### 1.1 Data Fetching with Server Components
+
+- Use server components for data fetching to improve performance and reduce client-side JavaScript.
+- Fetch data at the layout or page component level.
+
+```tsx
+// app/page.tsx
+import { getData } from '@/lib/data';
+
+type PageProps = {
+  params: { id: string }
+};
+
+export default async function Page({ params }: PageProps) {
+  const data = await getData(params.id);
+
+  return (
+    <div>
+      <h1>{data.title}</h1>
+      <p>{data.content}</p>
+    </div>
+  );
+}
+
+```
+
+### 1.2 Data Mutations with Server Actions
+
+- Use server actions for data mutations (POST, DELETE, etc.) to keep sensitive operations on the server.
+
+```tsx
+// app/actions.ts
+'use server';
+
+import { revalidatePath } from 'next/cache';
+
+export async function createItem(formData: FormData) {
+  const name = formData.get('name') as string;
+  // Perform creation logic here
+
+  revalidatePath('/items');
+}
+
+// app/new-item-form.tsx
+import { createItem } from './actions';
+
+export default function NewItemForm() {
+  return (
+    <form action={createItem}>
+      <input type="text" name="name" required />
+      <button type="submit">Create Item</button>
+    </form>
+  );
+}
+
+```
+
+### 1.3 API Route Handlers for Webhooks
+
+- Use API route handlers for webhooks and other external API interactions.
+
+```tsx
+// app/api/webhook/route.ts
+import { NextResponse } from 'next/server';
+
+export async function POST(request: Request) {
+  const body = await request.json();
+
+  // Process webhook payload
+
+  return NextResponse.json({ received: true }, { status: 200 });
+}
+
+```
+
+## 2. State Management with Zustand
+
+- Use Zustand for global state management.
+- Keep state, derived state, and event handlers in the store.
+
+```tsx
+// store/useAppStore.ts
+import { create } from 'zustand';
+
+type AppState = {
+  count: number;
+  doubleCount: number;
+  increment: () => void;
+};
+
+export const useAppStore = create<AppState>((set, get) => ({
+  count: 0,
+  get doubleCount() {
+    return get().count * 2;
+  },
+  increment: () => set((state) => ({ count: state.count + 1 })),
+}));
+
+```
+
+## 3. Tailwind and Shadcn UI Best Practices
+
+### 3.1 Custom Components
+
+- Use the `cn` function to merge Tailwind classes and allow overrides.
+
+```tsx
+// components/Button.tsx
+import { cn } from '@/lib/utils';
+
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: 'primary' | 'secondary';
+};
+
+export function Button({ className, variant = 'primary', ...props }: ButtonProps) {
+  return (
+    <button
+      className={cn(
+        'px-4 py-2 rounded',
+        {
+          'bg-blue-500 text-white': variant === 'primary',
+          'bg-gray-200 text-gray-800': variant === 'secondary',
+        },
+        className
+      )}
+      {...props}
+    />
+  );
+}
+
+```
+
+## 4. Form Validation with Zod
+
+- Use Zod for form validation and type inference.
+- Combine Zod with React Hook Form for efficient form handling.
+
+```tsx
+// schemas/userSchema.ts
+import { z } from 'zod';
+
+export const userSchema = z.object({
+  username: z.string().min(3).max(20),
+  email: z.string().email(),
+  age: z.number().min(18).max(120),
+});
+
+export type UserFormData = z.infer<typeof userSchema>;
+
+// components/UserForm.tsx
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { userSchema, UserFormData } from '@/schemas/userSchema';
+
+export function UserForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UserFormData>({
+    resolver: zodResolver(userSchema),
+  });
+
+  const onSubmit = (data: UserFormData) => {
+    console.log(data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register('username')} />
+      {errors.username && <span>{errors.username.message}</span>}
+
+      <input {...register('email')} />
+      {errors.email && <span>{errors.email.message}</span>}
+
+      <input type="number" {...register('age', { valueAsNumber: true })} />
+      {errors.age && <span>{errors.age.message}</span>}
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+```
+
+## 5. Optimistic UI Updates
+
+Implement optimistic UI updates to improve perceived performance:
+
+```tsx
+// components/TodoList.tsx
+import { useState } from 'react';
+import { useAppStore } from '@/store/useAppStore';
+
+type Todo = {
+  id: string;
+  text: string;
+  completed: boolean;
+};
+
+export function TodoList() {
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const addTodo = useAppStore((state) => state.addTodo);
+
+  const handleAddTodo = async (text: string) => {
+    // Optimistically update the UI
+    const optimisticTodo: Todo = { id: Date.now().toString(), text, completed: false };
+    setTodos([...todos, optimisticTodo]);
+
+    try {
+      // Perform the actual server action
+      const newTodo = await addTodo(text);
+      // Update with the real data from the server
+      setTodos(todos.map(todo => todo.id === optimisticTodo.id ? newTodo : todo));
+    } catch (error) {
+      // If there's an error, revert the optimistic update
+      setTodos(todos.filter(todo => todo.id !== optimisticTodo.id));
+      console.error('Failed to add todo:', error);
+    }
+  };
+
+  return (
+    <div>
+      {/* Todo list rendering */}
+      <button onClick={() => handleAddTodo('New Todo')}>Add Todo</button>
+    </div>
+  );
+}
+
+```
+
+These guidelines should help you maintain clean, scalable, and consistent TypeScript code across your NextJS project using Tailwind, Shadcn UI, Zustand, and Zod, while incorporating server components, server actions, API route handlers, and optimistic UI updates.
