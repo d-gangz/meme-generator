@@ -69,7 +69,7 @@ npm run dev
 ```
 
 ## Auth testing for Clerk
-- The syntax for Clerk's test email is you need to have a +clerk_test in the email address. E.g testl+clerk_test@example.com.
+- The syntax for Clerk's test email is you need to have a +clerk_test in the email address. E.g test1+clerk_test@example.com.
 - Password can be anything or just use "password".
 - Use `424242` for the verification code.
 
