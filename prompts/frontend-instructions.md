@@ -8,10 +8,10 @@ Follow these instructions to create new frontend components.
 
 ### Project Structure
 
-- The components folders is at the root of the project.
-- Please put all components that you create in the components folder.
-- Do not create any new components folders, just use the existing one.
-- Please group similar components in the same folder within the components folder.
+- The `components` folders is inside the `src` folder.
+- Please put all components that you create in the `components` folder.
+- Do not create any new `components` folders, just use the existing one.
+- Please group similar components in the same folder within the `components` folder.
 - All types are going to come from the table schema found in the `src/db/schema` files
 
 ### Server Components

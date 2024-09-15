@@ -1,22 +1,30 @@
 # New Table Instructions
 
-Follow these instructions to create a new table in the database.
+Follow these instructions to create a new table in the database and the related files (schema, queries, actions, etc.).
 
 ## Guidelines
 
-- User ids should be like this `userId: text("user_id").notNull()` because we user Clerk
+- User ids should be like this `userId: text("user_id").notNull()` as we are using Clerk for the auth. Therefore, if any tables require a user id, it should be this.
+- Ensure that relationships between tables are created correctly in the schema. if userId is required, dont need to reference the profiles table, just use `userId: text("user_id").notNull()`
+- Don't be lazy and generate out all the code (schema, queries, actions, etc.)
 
 ## Step 1: Create the Schema
 
-This is an example of how to create a new table in the database.
+- This file should be named like `profiles-schema.ts`.
 
-This file should be named like `profiles-schema.ts`.
+- This file should go in the `src/db/schema` folder.
 
-This file should go in the `src/db/schema` folder.
+- Make sure to export the `profiles-schema.ts` file in the `src/db/schema/index.ts` file.
 
-Make sure to export the `profiles-schema.ts` file in the `src/db/schema/index.ts` file.
+- Make sure to add the table to the `schema` object in the `src/db/db.ts` file.
+```ts
+const schema = {
+  profiles: profilesTable,
+  // Add other tables here
+};
+```
 
-Make sure to add the table to the `schema` object in the `src/db/db.ts` file.
+- This is an example of how to create a new table in the database.
 
 ```typescript
 import { pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
@@ -41,11 +49,11 @@ export type SelectProfile = typeof profilesTable.$inferSelect;
 
 ## Step 2: Create the Queries
 
-This is an example of how to create the queries for the table.
+- This file should be named like `profiles-queries.ts`.
 
-This file should be named like `profiles-queries.ts`.
+- This file should go in the `src/db/queries` folder.
 
-This file should go in the `src/db/queries` folder.
+- This is an example of how to create the queries for the table.
 
 ```typescript
 import { eq } from "drizzle-orm";
@@ -111,9 +119,11 @@ export const deleteProfile = async (userId: string) => {
 
 ## Step 3: Create the Actions
 
-This is an example of how to create the actions for the table.
+- This file should be named like `profiles-actions.ts`.
 
-This file should be named like `profiles-actions.ts`.
+- This file should go in the `src/actions` folder.
+
+- This is an example of how to create the actions for the table.
 
 ```typescript
 "use server";
