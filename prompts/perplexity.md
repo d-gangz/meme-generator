@@ -12,3 +12,9 @@ The prompts should include:
 - Create a clickable link in on this [title of search] (https://www.perplexity.ai/search?q={prompt}).
 - Ensure the prompt is URL encoded
 - Present each search link on a new line.
+
+## Guidelines
+- Ensure that the prompt is comprehensive and detailed.
+- Create a clickable link in on this [title of search] (https://www.perplexity.ai/search?q={prompt}).
+- Ensure the entire prompt is URL encoded. Don't miss anything.
+- Present each search link on a new line.
