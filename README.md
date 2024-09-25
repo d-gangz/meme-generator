@@ -30,25 +30,6 @@ They all have free plans that you can use to get started.
 
 You will likely not need paid plans unless you are building a business.
 
-## Environment Variables
-
-```bash
-# DB (Supabase)
-DATABASE_URL=
-
-# Auth (Clerk)
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/login
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/signup
-
-# Payments (Stripe)
-STRIPE_SECRET_KEY=
-STRIPE_WEBHOOK_SECRET=
-NEXT_PUBLIC_STRIPE_PAYMENT_LINK_YEARLY=
-NEXT_PUBLIC_STRIPE_PAYMENT_LINK_MONTHLY=
-```
-
 ## Setup
 
 1. Clone the repository
