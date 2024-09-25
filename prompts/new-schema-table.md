@@ -1,6 +1,6 @@
 # New Table Instructions
 
-Follow these instructions to create a new table in the database and the related files (schema, queries, actions, etc.).
+Follow these instructions to create a new schema in the database and its related files (queries, actions, etc.).
 
 ## Guidelines
 
@@ -24,7 +24,7 @@ const schema = {
 };
 ```
 
-- This is an example of how to create a new table in the database.
+- This is an example of how to create a new schema in the database.
 
 ```typescript
 import { pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
@@ -47,13 +47,13 @@ export type InsertProfile = typeof profilesTable.$inferInsert;
 export type SelectProfile = typeof profilesTable.$inferSelect;
 ```
 
-## Step 2: Create the Queries
+## Step 2: Create the Queries based on the Schema
 
 - This file should be named like `profiles-queries.ts`.
 
 - This file should go in the `src/db/queries` folder.
 
-- This is an example of how to create the queries for the table.
+- This is an example of how to create the queries for the schema.
 
 ```typescript
 import { eq } from "drizzle-orm";
@@ -117,13 +117,13 @@ export const deleteProfile = async (userId: string) => {
 };
 ```
 
-## Step 3: Create the Actions
+## Step 3: Create the Actions based on the schema and queries
 
 - This file should be named like `profiles-actions.ts`.
 
 - This file should go in the `src/actions` folder.
 
-- This is an example of how to create the actions for the table.
+- This is an example of how to create the actions for the schema and queries.
 
 ```typescript
 "use server";
@@ -189,7 +189,7 @@ export async function deleteProfileAction(userId: string): Promise<ActionState> 
 
 ## Step 4: Generate the SQL file and Migrate the DB
 
-Specifically run the following commands to generate the updated SQL file and migrate the DB.
+Specifically ask the user to run the following commands to generate the updated SQL file and migrate the DB.
 
 ```bash
 npm run db:generate
