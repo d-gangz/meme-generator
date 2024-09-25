@@ -4,23 +4,25 @@ Follow these instructions to create a new schema in the database and its related
 
 ## Guidelines
 
-- User ids should be like this `userId: text("user_id").notNull()` as we are using Clerk for the auth. Therefore, if any tables require a user id, it should be this.
-- Ensure that relationships between tables are created correctly in the schema. if userId is required, dont need to reference the profiles table, just use `userId: text("user_id").notNull()`
-- Don't be lazy and generate out all the code (schema, queries, actions, etc.)
+- Ensure that relationships between tables are created correctly in the schema.
+- User ids should be like this `userId: text("user_id").notNull()` as we are using Clerk for the auth. Therefore, if any tables require a user id, it should be this. 
+- In schemas,if userId is required, dont need to reference the other tables, just use `userId: text("user_id").notNull()`
+- Don't be lazy and generate out all the complete code (schema, queries, actions, etc) for every step.
+- Your goal is to completely finish whatever the user asks for.
 
 ## Step 1: Create the Schema
 
-- This file should be named like `profiles-schema.ts`.
+- This file should be named like `example-schema.ts`.
 
 - This file should go in the `src/db/schema` folder.
 
-- Make sure to export the `profiles-schema.ts` file in the `src/db/schema/index.ts` file.
+- Make sure to export the `example-schema.ts` file in the `src/db/schema/index.ts` file.
 
-- Make sure to add the table to the `schema` object in the `src/db/db.ts` file.
+- Make sure to add the schema to the `schema` object in the `src/db/db.ts` file. Here is an example:
 ```ts
 const schema = {
   profiles: profilesTable,
-  // Add other tables here
+  // Add other schemas here
 };
 ```
 
@@ -49,7 +51,7 @@ export type SelectProfile = typeof profilesTable.$inferSelect;
 
 ## Step 2: Create the Queries based on the Schema
 
-- This file should be named like `profiles-queries.ts`.
+- This file should be named like `example-queries.ts`.
 
 - This file should go in the `src/db/queries` folder.
 
@@ -119,7 +121,7 @@ export const deleteProfile = async (userId: string) => {
 
 ## Step 3: Create the Actions based on the schema and queries
 
-- This file should be named like `profiles-actions.ts`.
+- This file should be named like `example-actions.ts`.
 
 - This file should go in the `src/actions` folder.
 
