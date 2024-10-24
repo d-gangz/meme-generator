@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import {
-  createProfileAction,
-  getProfileByUserIdAction,
-} from "@/actions/profiles-actions";
-import { auth } from "@clerk/nextjs/server";
-import { ClerkProvider } from "@clerk/nextjs";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,24 +23,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { userId } = auth();
-
-  if (userId) {
-    const profile = await getProfileByUserIdAction(userId);
-    if (!profile.data) {
-      await createProfileAction({ userId });
-    }
-  }
-
   return (
-    <ClerkProvider afterSignOutUrl="/app">
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          {children}
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        {children}
+      </body>
+    </html>
   );
 }
