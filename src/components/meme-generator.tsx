@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -39,7 +40,7 @@ export function MemeGeneratorComponent() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl font-bold">Meme Generator</CardTitle>
       </CardHeader>
@@ -59,9 +60,11 @@ export function MemeGeneratorComponent() {
       </CardContent>
       <CardFooter className="flex justify-center">
         {memeUrl && (
-          <img
+          <Image
             src={memeUrl}
             alt="Generated Meme"
+            width={500}
+            height={500}
             className="max-w-full h-auto rounded-lg"
           />
         )}
