@@ -1,34 +1,29 @@
-# Gang App Setup
+# Meme Generator Playground
 
-Code template for a next.js app with supabase, clerk, stripe, and shadcn.
+A playground project for building and testing meme generation features using Next.js and modern web technologies.
 
-## Reach out
+## About
 
-Feel free to reach me at my twitter X [@limgangrui](https://x.com/limgangrui).
+This is my experimental space for building a meme generator web application. It serves as a testing ground for various features and technologies while creating something fun and interactive.
 
 ## Tech Stack
 
-- IDE: [Cursor](https://www.cursor.com/)
-- AI Tools: [V0](https://v0.dev/), [Perplexity](https://www.perplexity.com/)
-- Frontend: [Next.js](https://nextjs.org/docs), [Tailwind](https://tailwindcss.com/docs/guides/nextjs), [Shadcn](https://ui.shadcn.com/docs/installation), [Framer Motion](https://www.framer.com/motion/introduction/)
-- Backend: [PostgreSQL](https://www.postgresql.org/about/), [Supabase](https://supabase.com/), [Drizzle](https://orm.drizzle.team/docs/get-started-postgresql), [Server Actions](https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations)
-- Auth: [Clerk](https://clerk.com/)
-- Payments: [Stripe](https://stripe.com/)
+- **Frontend Framework**: [Next.js](https://nextjs.org/docs)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/docs/guides/nextjs), [Shadcn UI](https://ui.shadcn.com/docs/installation)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/introduction/)
+- **Backend**: [Supabase](https://supabase.com/) for storing meme templates and user creations
+- **Authentication**: [Clerk](https://clerk.com/) for user management
+- **Database ORM**: [Drizzle](https://orm.drizzle.team/docs/get-started-postgresql)
+- **Image Processing**: Server Actions for meme generation
 
-## Prerequisites
+## Features (In Progress)
 
-You will need accounts for the following services.
-
-They all have free plans that you can use to get started.
-
-- Create a [Cursor](https://www.cursor.com/) account
-- Create a [GitHub](https://github.com/) account
-- Create a [Supabase](https://supabase.com/) account
-- Create a [Clerk](https://clerk.com/) account
-- Create a [Stripe](https://stripe.com/) account
-- Create a [Vercel](https://vercel.com/) account
-
-You will likely not need paid plans unless you are building a business.
+- Meme template upload and management
+- Text overlay with customizable positioning
+- Font selection and styling
+- Image export capabilities
+- User collections for saved memes
+- Social sharing integration
 
 ## Setup
 
@@ -36,30 +31,42 @@ You will likely not need paid plans unless you are building a business.
 ```bash
 git clone {replace with repo url} .
 ```
-2. Copy `.env.example` to `.env.local` and fill in the environment variables from above
+
+2. Copy `.env.example` to `.env.local` and fill in the environment variables
 ```bash
 cp .env.example .env.local
 ```
-3. Run `npm install` to install dependencies
+
+3. Install dependencies
 ```bash
 npm install
 ```
-4. Run `npm run dev` to run the app locally
+
+4. Start the development server
 ```bash
 npm run dev
 ```
 
-## Auth testing for Clerk
-- The syntax for Clerk's test email is you need to have a +clerk_test in the email address. E.g test1+clerk_test@example.com.
-- Password can be anything or just use "password".
-- Use `424242` for the verification code.
+## Database Setup
 
-## Supabase testing
-- Run the following command to generate the SQL for the tables:
+Initialize the database with meme templates and necessary tables:
+
 ```bash
 npm run db:generate
-```
-- Run the following command to migrate the tables to Supabase:
-```bash
 npm run db:migrate
 ```
+
+## Testing Accounts
+
+### Auth Testing
+- Use email format: `anything+clerk_test@example.com`
+- Password: Can be anything (e.g., "password")
+- Verification code: `424242`
+
+## Contributing
+
+Feel free to experiment and contribute! This is a playground project meant for learning and testing new features.
+
+## Contact
+
+Questions or suggestions? Reach out to me on Twitter [@limgangrui](https://x.com/limgangrui)
