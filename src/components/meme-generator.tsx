@@ -40,25 +40,27 @@ export function MemeGeneratorComponent() {
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full max-w-2xl mx-auto bg-stone-900 border-none">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold">Meme Generator</CardTitle>
+        <CardTitle className="text-4xl text-center font-bold text-white py-4">
+          🔥 prompt-to-meme 🔥
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={generateMeme} className="space-y-4">
           <Input
             type="text"
-            placeholder="Write your thoughts for the meme"
+            placeholder="e.g. $goat will be the currency for ai agents"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             className="w-full"
           />
           <Button
             type="submit"
-            className="w-full bg-orange-600 text-white hover:bg-orange-700"
+            className="w-full bg-lime-500 text-stone-900 font-semibold text-lg hover:bg-lime-600"
             disabled={isLoading}
           >
-            {isLoading ? "Generating..." : "Generate Meme"}
+            {isLoading ? "Generating..." : "generate meme"}
           </Button>
         </form>
       </CardContent>
