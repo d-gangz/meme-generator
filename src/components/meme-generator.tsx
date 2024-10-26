@@ -48,12 +48,16 @@ export function MemeGeneratorComponent() {
         <form onSubmit={generateMeme} className="space-y-4">
           <Input
             type="text"
-            placeholder="Enter meme text"
+            placeholder="Write your thoughts for the meme"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             className="w-full"
           />
-          <Button type="submit" className="w-full" disabled={isLoading}>
+          <Button
+            type="submit"
+            className="w-full bg-orange-600 text-white hover:bg-orange-700"
+            disabled={isLoading}
+          >
             {isLoading ? "Generating..." : "Generate Meme"}
           </Button>
         </form>
