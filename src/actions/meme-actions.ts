@@ -28,6 +28,7 @@ export async function generateMemeAction(
         password: process.env.IMGFLIP_PASSWORD!,
         prefix_text: text, // The 'text' from the component is used here
         model: "openai",
+        no_watermark: "true",
         // These parameters are sent in the body of the POST request, not in the URL
         // This follows the API's requirement as stated in their documentation
       }),
